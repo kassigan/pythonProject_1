@@ -5,7 +5,7 @@ import scrapy
 
 class DivannewparsSpider(scrapy.Spider):
     name = "divannewpars"
-    allowed_domains = ["https://divan.ru"]
+    allowed_domains = ["divan.ru"]
     start_urls = ["https://www.divan.ru/category/svet"]
 
     def parse(self, response):
@@ -14,6 +14,6 @@ class DivannewparsSpider(scrapy.Spider):
             yield {
                 'name' : lamp.css('div.LsooF  span::text').get(),
                 'price' : lamp.css('div.pY3d2  span::text').get(),
-                'url' : lamp.css('a').attrib['href']
+                'url' : response.urljoin(lamp.css('a::attr(href)').get())
 
             }
